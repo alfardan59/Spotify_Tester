@@ -135,7 +135,11 @@ async function createAlbum(req, res) {
 
 
 async function getAllMusics(req,res){
-    const musics=await musicModel.find().populate("artist","username email")
+    const musics=await musicModel
+    .find()
+    .skip(2) //here we are telling how many songs we need to skip
+    .limit(20) //Here we are giving the limit of 20 that only 20 songs will be fetched from DB to the server
+    .populate("artist","username email")
 
     res.status(200).json({
         message:"Music fetched successfully!",
